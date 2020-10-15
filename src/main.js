@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import echarts from "echarts";
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
@@ -14,6 +15,9 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import { getToken, setToken, removeToken } from '@/utils/auth'
+
+
 
 /**
  * If you don't want to use mock-server
@@ -27,7 +31,8 @@ if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
-
+// 挂在到 Vue 实例上
+Vue.prototype.$echarts = echarts;
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明

@@ -1,4 +1,6 @@
+//引入登录,退出,获取用户信息的方法
 import { login, logout, getInfo } from '@/api/user'
+//引入保存,设置,删除token的方法
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -32,10 +34,12 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      //登录信息发送
+      login({ username: username.trim(), password: password, type: 'manager' }).then(response => {
         const { data } = response
+        //登录如果成功,将登陆返回的token进行保存
         commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        setToken(data.data.token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -56,7 +60,7 @@ const actions = {
         const { name, avatar } = data
 
         commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        commit('SET_AVATAR', "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600667016543&di=102f384d87c745a3cead26e04b4e7300&imgtype=0&src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201912%2F30%2F20191230121916_tikdb.thumb.400_0.gif")
         resolve(data)
       }).catch(error => {
         reject(error)
